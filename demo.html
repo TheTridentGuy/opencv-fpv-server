@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <script>
+        function $(id){
+            return document.getElementById(id)
+        }
+
+        document.onload = function(){
+            // Connect to our server:
+            test = new WebSocket("ws://localhost:8000/");
+
+            // This will run when data comes through the WebSocket:
+            test.onmessage = async function (event) {
+                // Get image:
+		            var image = await event.data.text();
+                // Preload image:
+                $("stream").src = image;
+            }
+    </script>
+    <style>
+        body {
+            background-image: element("#stream"); /* Set body background to streamed element */
+        }
+    </style>
+</head>
+<body>
+    <img src="" id="stream" class="bgimg">
+</body>
+</html>
